@@ -6,6 +6,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),  # login/logout
-    path('prediction/', include('prediction.urls')),\
+    path('', include('prediction.urls')),
     path('', RedirectView.as_view(pattern_name='prediction:index', permanent=False)),
 ]
