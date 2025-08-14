@@ -120,7 +120,7 @@ curl -i -b cookies.txt -c cookies.txt \
 ```bash
 curl -s -b cookies.txt -H "Content-Type: application/json" \
   -d '{"location":"Lahore","date":"2025-08-15"}' \
-  -X POST http://127.0.0.1:8000/api/predict/ | jq .
+  -X POST http://127.0.0.1:8000/api/predict/ |
 ```
 
 ---
