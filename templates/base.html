@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RainPredictor</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <style>
+    .prob-high { color: #b91c1c; font-weight: 600; }
+    .prob-mid { color: #92400e; font-weight: 600; }
+    .prob-low { color: #065f46; font-weight: 600; }
+    .mt-2 { margin-top: 0.5rem; }
+    .mt-4 { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <nav class="container-fluid">
+    <ul>
+      <li><strong>RainPredictor</strong></li>
+    </ul>
+    <ul>
+      {% if user.is_authenticated %}
+        <li><a href="{% url 'prediction:index' %}">Predict</a></li>
+        <li><a href="{% url 'prediction:history' %}">History</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+      {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'signup' %}">Sign up</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  <main class="container">
+    {% if messages %}
+      {% for m in messages %}
+        <article class="{% if m.tags %}{{ m.tags }}{% endif %}">{{ m }}</article>
+      {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

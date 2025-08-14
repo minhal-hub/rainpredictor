@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<section>
+  <h2>Your Prediction History</h2>
+  {% if items %}
+  <table class="mt-2">
+    <thead>
+      <tr>
+        <th>When</th>
+        <th>Location</th>
+        <th>Date</th>
+        <th>Rain Chance (%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in items %}
+      <tr>
+        <td>{{ row.created_at }}</td>
+        <td>{{ row.location }}</td>
+        <td>{{ row.date }}</td>
+        <td>{% if row.rain_chance is not None %}{{ row.rain_chance|floatformat:0 }}{% else %}-{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="mt-2">No history yet. Make your first prediction on the <a href="{% url 'prediction:index' %}">Predict</a> page.</p>
+  {% endif %}
+</section>
+{% endblock %}

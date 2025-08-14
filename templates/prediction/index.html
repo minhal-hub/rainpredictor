@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<section>
+  <h2>Rain Prediction</h2>
+  <form method="post" action="" class="mt-2">
+    {% csrf_token %}
+    <div class="grid">
+      <div>
+        <label>Location</label>
+        {{ form.location }}
+        <small>{{ form.location.help_text }}</small>
+      </div>
+      <div>
+        <label>Date</label>
+        {{ form.date }}
+      </div>
+    </div>
+    <button type="submit" class="mt-2">Predict</button>
+  </form>
+
+  {% if error %}
+    <article class="mt-4">{{ error }}</article>
+  {% endif %}
+
+  {% if result %}
+    <article class="mt-4">
+      <h3>Results</h3>
+      <p><strong>Where:</strong> {{ result.geo.name }}, {{ result.geo.country }}</p>
+      <p><strong>Date:</strong> {{ result.date }}</p>
+      {% if result.probability is not None %}
+        {% if result.probability|floatformat:0 >= 70 %}
+          <p class="prob-high">Rain chance: {{ result.probability|floatformat:0 }}%</p>
+        {% elif result.probability|floatformat:0 >= 30 %}
+          <p class="prob-mid">Rain chance: {{ result.probability|floatformat:0 }}%</p>
+        {% else %}
+          <p class="prob-low">Rain chance: {{ result.probability|floatformat:0 }}%</p>
+        {% endif %}
+      {% else %}
+        <p>Rain probability not available for this date.</p>
+      {% endif %}
+      <p class="mt-2"><a href="{% url 'prediction:history' %}">View your history</a></p>
+    </article>
+  {% endif %}
+</section>
+{% endblock %}
